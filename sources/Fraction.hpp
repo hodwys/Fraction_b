@@ -19,6 +19,7 @@ class Fraction{
 
     Fraction(int abc, int def);
     Fraction(float ghi);
+    Fraction();
     int getNumerator() const;
     int getDenominator() const;
     void Set_Numerator(int num);
@@ -49,21 +50,35 @@ class Fraction{
     friend Fraction operator-(float number,  const Fraction& mno);
     friend Fraction operator*(float number,  const Fraction& mno);
     friend Fraction operator/(float number,  const Fraction& mno);
+    friend Fraction operator/(const Fraction& mno, float number);
 
 
-    bool operator==(const Fraction& other);
+    bool operator==(const Fraction& other) const ;
+    friend bool operator==(float floa ,const Fraction& other);
+    friend bool operator==(const Fraction& other, float floa );
+    //friend bool operator==(int a, float floa );
 
-    bool operator<(const Fraction& other);
 
-    bool operator<(float other);
+    bool operator<(const Fraction& other)const;
+
+   friend bool operator<(float other, const Fraction& frac);
+   friend bool operator<( const Fraction& frac ,float other);
+
+    bool operator<(float other) ;
 
     bool operator>(float other);
 
-    bool operator>(const Fraction& other);
+    bool operator>(const Fraction& other) const ;
 
-    bool operator>=(const Fraction& other) ;
+    friend bool operator>(float other, const Fraction& frac);
 
-    bool operator<=(const Fraction& other) ;
+    bool operator>=(const Fraction& other) const;
+
+   friend bool operator>=(float other, const Fraction& frac);
+
+    bool operator<=(const Fraction& other) const;
+
+    friend bool operator<=(float other, const Fraction& frac);
 
 
 
@@ -73,17 +88,12 @@ class Fraction{
 
     Fraction operator++();
 
-    Fraction operator++(int abc);
+    const Fraction operator++(int abc);
 
     Fraction operator--();
 
-    Fraction operator--(int abc);
+    const Fraction operator--(int abc);
 
-
-
-
-
-    
 
 };
 }

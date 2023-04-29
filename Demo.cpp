@@ -34,4 +34,15 @@ int main() {
     else cout << " a is smaller than 1.1" << endl;
 
 
+    Fraction g(1, 2), n(1, 4);
+    Fraction l = g - n;
+   
+    Fraction d(4, 5);
+    float e = 0.4;
+    Fraction f = d - e; // 4/5 - 2/5 = 2/5
+   
+
+    Fraction k = e - d; // 2/5 - 4/5 = -2/5
+  
+    cout << k.getNumerator()<< endl; 
 }
