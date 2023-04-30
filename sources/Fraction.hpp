@@ -14,9 +14,6 @@ class Fraction{
         int Denominator;
 
     public:
-
-  //  Fraction();
-
     explicit Fraction(int abc, int def);
     Fraction(float ghi);
     Fraction();
@@ -32,10 +29,6 @@ class Fraction{
     Fraction operator+(const Fraction& other) const;
 
     Fraction operator-(const Fraction& other) const;
-
-    //Fraction operator*(const Fraction& other) const;
-
-   // Fraction operator*(Fraction& other);
 
     Fraction operator/(const Fraction& other) const;
 
@@ -60,16 +53,10 @@ class Fraction{
     bool operator==(const Fraction& other) const;
     bool operator!=(const Fraction& other) const;
 
-    //friend bool operator==(const Fraction& other , const Fraction& second);
-    // friend bool operator==(float floa ,const Fraction& other);
-    // friend bool operator==(const Fraction& other, float floa );
-    //friend bool operator==(int a, float floa );
-
 
     bool operator<(const Fraction& other)const;
 
     friend bool operator<(float other, const Fraction& frac);
-    //friend bool operator<( const Fraction& frac ,float other);
     Fraction operator*(const Fraction &other) const;
 
 
@@ -110,5 +97,3 @@ class Fraction{
 
 
 #endif
-
-    // Fraction& operator--();
