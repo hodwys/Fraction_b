@@ -17,7 +17,7 @@ int a = INT_MAX;
 int b = INT_MIN;
 
 // 240999
-Fraction :: Fraction(int abc, int def){
+ Fraction :: Fraction(int abc, int def){
     if(def == 0){
         throw std ::invalid_argument ("Division_by_0");
     }
@@ -25,13 +25,21 @@ Fraction :: Fraction(int abc, int def){
         abc = -abc;
         def = -def;
     }
+    long c = (long) (abc);
+    long d =(long)(def);
 
+    if(!(isvalid(c,d))){
+        throw std:: overflow_error("invalid input");
+    }
+    //int gcd = std::__gcd((abc) , (def) );
 
-   // int gcd = std::__gcd((abc) , (def) );
-
-    
     this-> Numerator = abc;
     this-> Denominator = def;
+
+   
+
+    // temp.Set_Numerator(abc / gcd);
+    // temp.Set_Denominator(def / gcd);
 }
 
 Fraction :: Fraction(float def){
@@ -71,11 +79,18 @@ void Fraction:: Set_Denominator(int den){
 }
 
 bool Fraction::isvalid( long a, long b)const{
+    if(a > INT_MAX || b > INT_MAX || a < INT_MIN || b < INT_MIN){
+        return false;
+    }
+    return true;
+}
+bool Fraction::isvalid2( long long a, long long b)const{
     if(a> INT_MAX || b>INT_MAX || a<INT_MIN || b<INT_MIN){
         return false;
     }
     return true;
 }
+
 
 
 Fraction Fraction::operator+( const Fraction& other) const{
@@ -144,13 +159,22 @@ Fraction Fraction:: operator*(const Fraction& other)const{
         throw std:: runtime_error("div by 0");
     }
 
-    // long check1 = long(this->Numerator) * other.getNumerator();
-    // long check2 = long(this->Denominator) * other.getDenominator();
-    // if (check1 > INT_MAX || check2 > INT_MAX ||  check1 < INT_MIN || check2 < INT_MIN){
-    // throw std::overflow_error (" Note we're using INTEGERS");
-    // }
-    long c = long((this->Numerator)) * other.getNumerator();
-    long d = long(this->Denominator) * other.getDenominator();
+    Fraction temp1(this->Numerator, this->Denominator);
+
+    Fraction temp2(other.getNumerator(),other.getDenominator());
+    int num1 = this->Numerator;
+    int num2 = other.getNumerator();
+    int den1 = this->Denominator;
+    int den2 =  other.getDenominator();
+    int gcd1 = std::__gcd((num1) , (den1) );
+    int gcd2 = std::__gcd((num2) , (den2) );
+    temp1.Set_Numerator(num1/ gcd1);
+    temp1.Set_Denominator(den1/ gcd1);
+    temp2.Set_Denominator(den2/gcd2);
+    temp2.Set_Numerator(num2/gcd2 );
+
+    long c = (long)temp1.getNumerator() * temp2.getNumerator();
+    long d = (long)temp1.getDenominator() * temp2.getDenominator();
    
     if(!( isvalid(c,d))){
         throw std:: overflow_error("invalid input");
@@ -163,8 +187,8 @@ Fraction Fraction:: operator*(const Fraction& other)const{
     int gcd = std::__gcd((num) , (den) );
     temp.Set_Numerator(num / gcd);
     temp.Set_Denominator(den / gcd);
-    return temp;
-}
+       
+    return temp;}
 
 Fraction Fraction:: operator/( const Fraction& other) const{
 
@@ -174,8 +198,22 @@ Fraction Fraction:: operator/( const Fraction& other) const{
         throw std:: runtime_error("div by 0");
     }
 
-    long c = long(this->Denominator) * other.getNumerator();
-    long d = long(this->Numerator) * other.getDenominator();
+    Fraction temp1(this->Numerator, this->Denominator);
+
+    Fraction temp2(other.getNumerator(),other.getDenominator());
+    int num1 = this->Numerator;
+    int num2 = other.getNumerator();
+    int den1 = this->Denominator;
+    int den2 =  other.getDenominator();
+    int gcd1 = std::__gcd((num1) , (den1) );
+    int gcd2 = std::__gcd((num2) , (den2) );
+    temp1.Set_Numerator(num1/ gcd1);
+    temp1.Set_Denominator(den1/ gcd1);
+    temp2.Set_Denominator(den2/gcd2);
+    temp2.Set_Numerator(num2/gcd2 );
+
+    long c = (long)temp1.getNumerator() * temp2.getNumerator();
+    long d = (long)temp1.getDenominator() * temp2.getDenominator();
    
     if(!(isvalid(c,d))){
         throw std:: overflow_error("invalid input");
@@ -395,36 +433,6 @@ bool Fraction:: operator<(const Fraction& other)const {
 
 
 
-bool operator<(const Fraction& frac , float other){
-    // if(other.getDenominator()> a || other.getNumerator()>a ||other.getDenominator()< b || other.getNumerator()<b){
-    //     throw std:: runtime_error("invalid input");
-    // }
-    Fraction eror(frac.getNumerator(), frac.getDenominator());
-
- cout << "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" << endl;
-    Fraction temp(other*1000,1000); 
-    Fraction temp_frac(frac.getNumerator(), frac.getDenominator());
-    int other_den = temp.getDenominator();
-    int  frac_den = frac.getDenominator();
-
-    temp.Set_Denominator(other_den* frac_den);
-    temp_frac.Set_Denominator(other_den* frac_den);
-    cout << "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" << endl;
-
-    int other_num = temp.getNumerator();
-    int frac_num = temp_frac.getNumerator();
-
-    temp.Set_Numerator(other_num * frac_den);
-    temp_frac.Set_Numerator(frac_num * other_den);
-
-    bool frac_les = ((temp_frac.getNumerator() < temp.getNumerator()));
-    cout << "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" << endl;
-
-   return frac_les;
- //  return frac<temp;
-
-}
-
 
 bool operator<(float other ,const Fraction& frac){
     // if(other.getDenominator()> a || other.getNumerator()>a ||other.getDenominator()< b || other.getNumerator()<b){
@@ -433,7 +441,7 @@ bool operator<(float other ,const Fraction& frac){
     Fraction eror(frac.getNumerator(), frac.getDenominator());
 
 
-    cout << "acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << endl;
+    
     Fraction temp(other*1000,1000); 
     Fraction temp_frac(frac.getNumerator(), frac.getDenominator());
     int other_den = temp.getDenominator();
@@ -441,8 +449,7 @@ bool operator<(float other ,const Fraction& frac){
 
     temp.Set_Denominator(other_den* frac_den);
     temp_frac.Set_Denominator(other_den* frac_den);
-    cout << "acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << endl;
-
+   
     int other_num = temp.getNumerator();
     int frac_num = temp_frac.getNumerator();
 
@@ -451,7 +458,7 @@ bool operator<(float other ,const Fraction& frac){
 
     bool other_les = (temp.getNumerator() < temp_frac.getNumerator());
 
-    return other_les;
+    return (other_les);
     //return temp < frac;
 
 }
@@ -472,7 +479,7 @@ bool Fraction:: operator<(float other) {
     temp_this.Set_Denominator(other_den* this_den);
 
     int other_num = temp.getNumerator();
-    int this_num = -temp_this.getNumerator();
+    int this_num = temp_this.getNumerator();
 
     temp.Set_Numerator(other_num * this_den);
     temp_this.Set_Numerator(this_num * other_den);

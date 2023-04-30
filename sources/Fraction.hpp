@@ -17,7 +17,7 @@ class Fraction{
 
   //  Fraction();
 
-    Fraction(int abc, int def);
+    explicit Fraction(int abc, int def);
     Fraction(float ghi);
     Fraction();
     int getNumerator() const;
@@ -27,11 +27,13 @@ class Fraction{
 
 
     bool isvalid( long a, long b) const;
+    bool isvalid2( long long a, long long b)const;
+
     Fraction operator+(const Fraction& other) const;
 
     Fraction operator-(const Fraction& other) const;
 
-    Fraction operator*(const Fraction& other) const;
+    //Fraction operator*(const Fraction& other) const;
 
    // Fraction operator*(Fraction& other);
 
@@ -66,8 +68,10 @@ class Fraction{
 
     bool operator<(const Fraction& other)const;
 
-   friend bool operator<(float other, const Fraction& frac);
-   friend bool operator<( const Fraction& frac ,float other);
+    friend bool operator<(float other, const Fraction& frac);
+    //friend bool operator<( const Fraction& frac ,float other);
+    Fraction operator*(const Fraction &other) const;
+
 
     bool operator<(float other) ;
 
@@ -106,12 +110,5 @@ class Fraction{
 
 
 #endif
-
-
-
-
-
-
-  
 
     // Fraction& operator--();
