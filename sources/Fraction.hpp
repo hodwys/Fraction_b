@@ -47,15 +47,18 @@ class Fraction{
 
     
     friend Fraction operator+(float number, const Fraction& mno);
+    friend Fraction operator+(const Fraction& mno, float number);
+
     friend Fraction operator-(float number,  const Fraction& mno);
     friend Fraction operator*(float number,  const Fraction& mno);
     friend Fraction operator/(float number,  const Fraction& mno);
     friend Fraction operator/(const Fraction& mno, float number);
 
 
-    bool operator==(const Fraction& other) const ;
-    friend bool operator==(float floa ,const Fraction& other);
-    friend bool operator==(const Fraction& other, float floa );
+    bool operator==(const Fraction& other) const;
+    //friend bool operator==(const Fraction& other , const Fraction& second);
+    // friend bool operator==(float floa ,const Fraction& other);
+    // friend bool operator==(const Fraction& other, float floa );
     //friend bool operator==(int a, float floa );
 
 
