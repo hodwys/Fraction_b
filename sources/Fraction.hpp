@@ -26,7 +26,7 @@ class Fraction{
     void Set_Denominator(int den);
 
 
-
+    bool isvalid( long a, long b) const;
     Fraction operator+(const Fraction& other) const;
 
     Fraction operator-(const Fraction& other) const;
@@ -56,6 +56,8 @@ class Fraction{
 
 
     bool operator==(const Fraction& other) const;
+    bool operator!=(const Fraction& other) const;
+
     //friend bool operator==(const Fraction& other , const Fraction& second);
     // friend bool operator==(float floa ,const Fraction& other);
     // friend bool operator==(const Fraction& other, float floa );
