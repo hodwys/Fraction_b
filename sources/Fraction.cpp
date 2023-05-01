@@ -74,12 +74,12 @@ bool Fraction::isvalid( long a, long b)const{
     }
     return true;
 }
-bool Fraction::isvalid2( long long a, long long b)const{
-    if(a> INT_MAX || b>INT_MAX || a<INT_MIN || b<INT_MIN){
-        return false;
-    }
-    return true;
-}
+// bool Fraction::isvalid2( long long a, long long b)const{
+//     if(a> INT_MAX || b>INT_MAX || a<INT_MIN || b<INT_MIN){
+//         return false;
+//     }
+//     return true;
+// }
 
 
 

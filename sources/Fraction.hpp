@@ -23,8 +23,8 @@ class Fraction{
     void Set_Denominator(int den);
 
 
-    bool isvalid( long a, long b) const;
-    bool isvalid2( long long a, long long b)const;
+    bool isvalid( long abc, long bcd) const;
+    //bool isvalid2( long long abc, long long b)const;
 
     Fraction operator+(const Fraction& other) const;
 
