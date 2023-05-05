@@ -9,9 +9,9 @@ using namespace std;
 
 namespace ariel{
 
+
 int a = INT_MAX;
 int b = INT_MIN;
-
  Fraction :: Fraction(int abc, int def){
     if(def == 0){
         throw std ::invalid_argument ("Division_by_0");
@@ -36,17 +36,12 @@ Fraction :: Fraction(float def){
 
     Set_Numerator(int(def*1000));
     Set_Denominator(1000);
-
-    // return def2;
 }
 
 Fraction :: Fraction(){
     Fraction temp(0,1);
-    // return def2;
 }
 
-
-//Fraction();
 
 int Fraction::getNumerator() const{
     return this-> Numerator;
@@ -74,16 +69,13 @@ bool Fraction::isvalid( long a, long b)const{
     }
     return true;
 }
-// bool Fraction::isvalid2( long long a, long long b)const{
-//     if(a> INT_MAX || b>INT_MAX || a<INT_MIN || b<INT_MIN){
-//         return false;
-//     }
-//     return true;
+
+
+// Fraction Fraction::reduction(){
+
 // }
 
-
-
-Fraction Fraction::operator+( const Fraction& other) const{
+Fraction Fraction::operator+(const Fraction& other) const{
 
 
     if(other.getDenominator()== 0 ){
@@ -112,6 +104,23 @@ Fraction Fraction::operator+( const Fraction& other) const{
 }
 
 
+Fraction Fraction:: operator+(float jkl){
+
+    Fraction temp(this->Numerator, this->Denominator); 
+    Fraction floa(jkl);
+    return floa + temp; 
+}
+
+
+Fraction operator+(float number, const Fraction& mno){ 
+ 
+    Fraction floa(number);
+
+    return mno + floa;
+}
+
+
+
 Fraction Fraction:: operator-(const Fraction& other)const {
 
     if(other.getDenominator()== 0 ){
@@ -138,6 +147,21 @@ Fraction Fraction:: operator-(const Fraction& other)const {
     return temp;
 
 }
+
+Fraction Fraction:: operator-(float jkl){
+    Fraction temp(this->Numerator, this-> Denominator); 
+    Fraction floa(jkl);
+    return temp - floa; 
+}
+
+
+
+Fraction operator-(float number, const Fraction& mno){
+    // Fraction temp(mno.getNumerator(),mno.getDenominator()); 
+    Fraction floa(number);
+    return floa - mno; 
+}
+
 
 
 Fraction Fraction:: operator*(const Fraction& other)const{
@@ -176,12 +200,27 @@ Fraction Fraction:: operator*(const Fraction& other)const{
     temp.Set_Numerator(num / gcd);
     temp.Set_Denominator(den / gcd);
        
-    return temp;}
+    return temp;
+}
+
+Fraction Fraction:: operator*(float jkl){
+Fraction temp(this->Numerator,this->Denominator); 
+Fraction floa(jkl);
+
+return floa*temp; 
+}
+
+
+Fraction operator*(float number, const Fraction& mno){
+    Fraction floa(number);
+    return mno*floa; 
+}
+
+
 
 Fraction Fraction:: operator/( const Fraction& other) const{
 
-
-    if(other.getNumerator()==0 || this->Denominator==0){
+   if(other.getNumerator()==0 || this->Denominator==0){
 
         throw std:: runtime_error("div by 0");
     }
@@ -218,51 +257,18 @@ Fraction Fraction:: operator/( const Fraction& other) const{
     return temp;   
 }
 
+Fraction operator/(float number, const Fraction& mno){
 
-Fraction Fraction:: operator+(float jkl){
+    Fraction floa(number);
+    return floa/mno;   
+}
 
-    Fraction temp(0,1); 
-    Fraction floa(jkl*1000,1000);
-    if(floa.getDenominator()== 0 ){
-    throw std:: runtime_error("div by 0");
-    }
-
-    int den =  ((this->Denominator) * (floa.getDenominator()));
-    int num = ((this->Numerator * floa.getDenominator()) + (this->Denominator * floa.getNumerator()));
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp; 
+Fraction operator/(const Fraction& mno , float number){
+    Fraction floa(number);
+    return mno/floa;   
 }
 
 
-Fraction Fraction:: operator-(float jkl){
-    Fraction temp(0,1); 
-    Fraction floa(jkl*1000,1000);
-
-    if(floa.getDenominator()== 0 ){
-        throw std:: runtime_error("div by 0");
-    }
-
-
-    int den =  ((this->Denominator) * (floa.getDenominator()));
-    int num = ((this->Numerator * floa.getDenominator()) - (this->Denominator * floa.getNumerator()));
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp; 
-}
-
-Fraction Fraction:: operator*(float jkl){
-    Fraction temp(0,1); 
-    Fraction floa(jkl*1000,1000);
-    int den = (this->Denominator * floa.getDenominator());
-    int num = (this->Numerator * floa.getNumerator());
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp; 
-}
 
 bool Fraction::operator==(const Fraction &other) const
 {
@@ -272,122 +278,27 @@ bool Fraction::operator==(const Fraction &other) const
     int num2 = (int)(((float)other.Numerator / (float)other.Denominator) * epsilon);
 
     return (num1 == num2);
-  }
+}
+
+bool operator==(float floa, const Fraction &other)
+{
+    Fraction temp(floa);
+    return temp== other;
+}
+
 
 bool Fraction::operator!=(const Fraction &other) const
 {
-    if(other.getDenominator()> a || other.getNumerator()>a ||other.getDenominator()< b || other.getNumerator()<b){
-        throw std:: overflow_error("invalid input");
-    }
-    const float epsilon = 1000.0;
-    int num1 = (int)(((float)Numerator / (float)Denominator) * epsilon);
-    int num2 = (int)(((float)other.Numerator / (float)other.Denominator) * epsilon);
-
-    return (!(num1 == num2));
+    Fraction floa(this->Numerator, this->Denominator);
+     return !(floa ==other);
 }
-  bool operator==(float floa, const Fraction &other)
-  {
 
-    Fraction eror(other.getNumerator(), other.getDenominator());
 
-    Fraction temp_other(other.getNumerator(), other.getDenominator());
-    Fraction temp_this(floa * 1000, 1000);
-    int gcd1 = std::__gcd(temp_this.getDenominator(), (temp_this.getNumerator()));
-    temp_this.Set_Numerator(temp_this.getNumerator() / gcd1);
-    temp_this.Set_Denominator(temp_this.getDenominator() / gcd1);
-
-    int gcd2 = std::__gcd(other.getDenominator(), (other.getNumerator()));
-    int a = (other.getNumerator() / gcd2);
-    temp_other.Set_Numerator(a);
-    int b = other.getDenominator() / gcd2;
-    temp_other.Set_Denominator(b);
-
-    bool den = temp_other.getDenominator() == temp_this.getDenominator();
-    bool num = temp_other.getNumerator() == temp_this.getNumerator();
-    return den && num;
-  }
 
 
   bool operator!=(float floa, const Fraction &other)
   {
-    if(other.getDenominator()> a || other.getNumerator()>a ||other.getDenominator()< b || other.getNumerator()<b){
-        throw std:: overflow_error("invalid input");
-    }
-
-    Fraction eror(other.getNumerator(), other.getDenominator());
-
-    Fraction temp_other(other.getNumerator(), other.getDenominator());
-    Fraction temp_this(floa * 1000, 1000);
-    int gcd1 = std::__gcd(temp_this.getDenominator(), (temp_this.getNumerator()));
-    temp_this.Set_Numerator(temp_this.getNumerator() / gcd1);
-    temp_this.Set_Denominator(temp_this.getDenominator() / gcd1);
-
-    int gcd2 = std::__gcd(other.getDenominator(), (other.getNumerator()));
-    int a = (other.getNumerator() / gcd2);
-    temp_other.Set_Numerator(a);
-    int b = other.getDenominator() / gcd2;
-    temp_other.Set_Denominator(b);
-
-    bool den = temp_other.getDenominator() == temp_this.getDenominator();
-    bool num = temp_other.getNumerator() == temp_this.getNumerator();
-    return !(den && num);
-  }
-
-
-
-
-  bool operator==(const Fraction &other, float floa)
-  {
-
-    if(other.getDenominator()> a || other.getNumerator()>a ||other.getDenominator()< b || other.getNumerator()<b){
-        throw std:: overflow_error("invalid input");
-    }
-    Fraction eror(other.getNumerator(), other.getDenominator());
-
-    Fraction temp_other(other.getNumerator(), other.getDenominator());
-    Fraction temp_this(floa * 1000, 1000);
-    int gcd1 = std::__gcd(temp_this.getDenominator(), (temp_this.getNumerator()));
-    temp_this.Set_Numerator(temp_this.getNumerator() / gcd1);
-    temp_this.Set_Denominator(temp_this.getDenominator() / gcd1);
-
-    int gcd2 = std::__gcd(other.getDenominator(), (other.getNumerator()));
-    int a = (other.getNumerator() / gcd2);
-    temp_other.Set_Numerator(a);
-    int b = other.getDenominator() / gcd2;
-    temp_other.Set_Denominator(b);
-
-    bool den = temp_other.getDenominator() == temp_this.getDenominator();
-    bool num = temp_other.getNumerator() == temp_this.getNumerator();
-    return den && num;
-  }
-
-
-
-
-
-    bool operator!=(const Fraction &other, float floa)
-  {
-    if(other.getDenominator()> a || other.getNumerator()>a ||other.getDenominator()< b || other.getNumerator()<b){
-        throw std:: overflow_error("invalid input");
-    }
- 
-    Fraction eror(other.getNumerator(), other.getDenominator());
-
-    Fraction temp_other(other.getNumerator(), other.getDenominator());
-    Fraction temp_this(floa * 1000, 1000);
-    int gcd1 = std::__gcd(temp_this.getDenominator(), (temp_this.getNumerator()));
-    temp_this.Set_Numerator(temp_this.getNumerator() / gcd1);
-    temp_this.Set_Denominator(temp_this.getDenominator() / gcd1);
-
-    int gcd2 = std::__gcd(other.getDenominator(), (other.getNumerator()));
-    int a = (other.getNumerator() / gcd2);
-    temp_other.Set_Numerator(a);
-    int b = other.getDenominator() / gcd2;
-    temp_other.Set_Denominator(b);
-
-    bool den = temp_other.getDenominator() == temp_this.getDenominator();
-    bool num = temp_other.getNumerator() == temp_this.getNumerator();
-    return !(den && num);
+    return !(floa ==other);
   }
 
 
@@ -414,7 +325,6 @@ bool Fraction:: operator<(const Fraction& other)const {
    temp_this.Set_Numerator(this_num * other_den);
 
     bool this_les = (temp_this.getNumerator() < temp_other.getNumerator());
-
     return this_les;
 
 }
@@ -424,29 +334,8 @@ bool Fraction:: operator<(const Fraction& other)const {
 
 bool operator<(float other ,const Fraction& frac){
 
-    Fraction eror(frac.getNumerator(), frac.getDenominator());
-
-
-    
-    Fraction temp(other*1000,1000); 
-    Fraction temp_frac(frac.getNumerator(), frac.getDenominator());
-    int other_den = temp.getDenominator();
-    int  frac_den = frac.getDenominator();
-
-    temp.Set_Denominator(other_den* frac_den);
-    temp_frac.Set_Denominator(other_den* frac_den);
-   
-    int other_num = temp.getNumerator();
-    int frac_num = temp_frac.getNumerator();
-
-    temp.Set_Numerator(other_num * frac_den);
-    temp_frac.Set_Numerator(frac_num * other_den);
-
-    bool other_les = (temp.getNumerator() < temp_frac.getNumerator());
-
-    return (other_les);
-    //return temp < frac;
-
+    Fraction temp(other);
+    return (temp < frac);
 }
 
 
@@ -454,24 +343,9 @@ bool operator<(float other ,const Fraction& frac){
 
 bool Fraction:: operator<(float other) {
  
-    Fraction temp(other*1000,1000); 
+    Fraction temp(other); 
     Fraction temp_this(this->Numerator, this->Denominator);
-    int other_den = temp.getDenominator();
-    int  this_den = this->Denominator;
-
-    temp.Set_Denominator(other_den* this_den);
-    temp_this.Set_Denominator(other_den* this_den);
-
-    int other_num = temp.getNumerator();
-    int this_num = temp_this.getNumerator();
-
-    temp.Set_Numerator(other_num * this_den);
-    temp_this.Set_Numerator(this_num * other_den);
-
-    bool this_les = (temp_this.getNumerator() < temp.getNumerator());
-
-    return this_les;
-
+    return (temp_this < temp);
 }
 
 
@@ -503,51 +377,18 @@ bool Fraction:: operator>(const Fraction& other)const {
 
 
 bool Fraction:: operator>(float other) { 
+
     Fraction temp(other*1000,1000); 
     Fraction temp_this(this->Numerator, this->Denominator);
-    int other_den = temp.getDenominator();
-    int this_den = this->Denominator;
-
-    temp.Set_Denominator(other_den* this_den);
-    temp_this.Set_Denominator(other_den* this_den);
-
-    int other_num = temp.getNumerator();
-    int this_num = temp_this.getNumerator();
-
-    temp.Set_Numerator(other_num * this_den);
-    temp_this.Set_Numerator(this_num * other_den);
-
-    bool this_big = (temp_this.getNumerator() > temp.getNumerator());
-
-    return this_big;
-
+    return (temp_this > temp);
 }
-
-
 
 bool operator>(float other, const Fraction& frac){
 
-    Fraction eror(frac.getNumerator(), frac.getDenominator());
-
-
-    Fraction temp(other*1000,1000); 
-    int other_den = temp.getDenominator();
-    Fraction temp_frac(frac.getNumerator(), frac.getDenominator());
-    int  frac_den = temp_frac.getDenominator();
-
-    temp.Set_Denominator(other_den* frac_den);
-    temp_frac.Set_Denominator(other_den* frac_den);
-
-    int other_num = temp.getNumerator();
-    int this_num = temp_frac.getNumerator();
-
-    temp.Set_Numerator(other_num * frac_den);
-    temp_frac.Set_Numerator(this_num * other_den);
-
-    bool this_big = (temp_frac.getNumerator() < temp.getNumerator());
-
-    return this_big;
+    Fraction temp(other); 
+    return (temp > frac);
 }
+
 
 bool Fraction:: operator>=( const Fraction& other) const {
 
@@ -579,25 +420,8 @@ bool Fraction:: operator>=( const Fraction& other) const {
 
 bool operator>=(float other, const Fraction& frac){
 
-    Fraction eror(frac.getNumerator(), frac.getDenominator());
-
-    Fraction temp(other*1000,1000); 
-    Fraction temp_frac(frac.getNumerator(), frac.getDenominator());
-    int other_den = temp.getDenominator();
-    int  frac_den = frac.getDenominator();
-
-    temp.Set_Denominator(other_den* frac_den);
-    temp_frac.Set_Denominator(other_den* frac_den);
-
-    int other_num = temp.getNumerator();
-    int frac_num = temp_frac.getNumerator();
-
-    temp.Set_Numerator(other_num * frac_den);
-    temp_frac.Set_Numerator(frac_num * other_den);
-
-    bool frac_les = ((temp_frac.getNumerator()) < (temp.getNumerator()));
-
-    return frac_les;
+    Fraction temp(other);
+    return (temp >= frac);
 }
 
 
@@ -627,29 +451,9 @@ bool Fraction:: operator<=(const Fraction& other) const {
 }
 
 bool operator<=(float floa, const Fraction& other){
-     
-    Fraction eror(other.getNumerator(), other.getDenominator());
 
-   int other_den = other.getDenominator();
-  
-
-    Fraction temp_other(other.Numerator, other.Denominator);
-    Fraction temp_this(floa*1000,1000);
-    int  this_den = temp_this.getDenominator();
-
-
-   temp_other.Set_Denominator(other_den* this_den);
-   temp_this.Set_Denominator(other_den* this_den);
-
-    int other_num = other.getNumerator();
-    int this_num =temp_this.getNumerator();
-
-    temp_other.Set_Numerator(other_num * this_den);
-    temp_this.Set_Numerator(this_num * other_den);
-
-    bool this_leeq = (temp_this.getNumerator() <= temp_other.getNumerator());
-
-    return this_leeq;
+    Fraction temp_this(floa);
+    return (temp_this <= other);
 }
 
 
@@ -678,90 +482,8 @@ const Fraction Fraction:: operator--(int abc){
 }
 
 
-
-Fraction operator+(float number, const Fraction& mno){ 
- 
-     Fraction floa(number*1000,1000);
-
-    return mno+ floa;
-}
-
-
-Fraction operator+(const Fraction& mno, float number){ 
-
-    Fraction floa(number*1000,1000);
-   return floa + mno;
-
-}
-
-
-Fraction operator-(float number, const Fraction& mno){
-    Fraction temp(0,1); 
-    Fraction floa(number*1000,1000);
-    long c = -((mno.Numerator * floa.getDenominator()) - (mno.Denominator * floa.getNumerator()));
-    long d =((mno.Denominator) * (floa.getDenominator()));
-
-    if(c > INT_MAX || d>INT_MAX || c< INT_MIN || d< INT_MIN){
-        throw std:: overflow_error("invalid input");
-    }
-
-    
-    int den =  ((mno.Denominator) * (floa.getDenominator()));
-    int num = -((mno.Numerator * floa.getDenominator()) - (mno.Denominator * floa.getNumerator()));
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp; 
-       //return floa + mno;
-}
-
-
-Fraction operator*(float number, const Fraction& mno){
-    Fraction temp(0,1); 
-    Fraction floa(number*1000,1000);
-    int den = (mno.Denominator * floa.getDenominator());
-    int num = (mno.Numerator * floa.getNumerator());
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp; 
-}
-
-
-Fraction operator/(float number, const Fraction& mno){
-    if(mno.getDenominator()==0){
-        throw std:: runtime_error("div by 0");
-    }
-    Fraction temp(0,1); 
-    Fraction floa(number*1000,1000);
-    int den = mno.Numerator * floa.getDenominator();
-    int num = (mno.Denominator * floa.getNumerator());
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp;   
-}
-
-
-
-Fraction operator/(const Fraction& mno , float number){
-    Fraction temp(0,1); 
-    Fraction floa(number*1000,1000);
-    if(floa.getNumerator()==0){
-        throw std:: runtime_error("div by 0");
-    }
-    int den = mno.Denominator * floa.getNumerator();
-    int num = (mno.Numerator * floa.getDenominator());
-    int gcd = std::__gcd((num) , (den) );
-    temp.Set_Numerator(num / gcd);
-    temp.Set_Denominator(den / gcd);
-    return temp;   
-}
-
 std::ostream& operator<< (std::ostream& output, const Fraction& ghi){
 
-
-    
     int num = ghi.getNumerator();
     int denom = ghi.getDenominator();
     int gcd = std::__gcd(num,denom);
